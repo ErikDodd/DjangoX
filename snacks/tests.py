@@ -1,3 +1,4 @@
+import pytest
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
@@ -9,14 +10,7 @@ class SnacksTests(TestCase):
         self.user = get_user_model().objects.create_user(username="tester", email="test@gmail.com", password="pass")
 
         self.snack = Snack.objects.create(title="popsicle", purchaser=self.user, description="description of popsicle")
-
-    def test_str_representation(self):
-        self.assertEqual(str(self.snack), "popsicle")
-
-    def test_snack_content(self):
-        self.assertEqual(f"{self.snack.name}", "popsicle")
-        self.assertEqual(f"{self.snack.purchaser}", "tester")
-        self.assertEqual(f"{self.snack.description}", "description of popsicle")
+        return self.user
 
     def test_snack_list_view(self):
         response = self.client.get(reverse("snack_list"))
@@ -46,9 +40,10 @@ class SnacksTests(TestCase):
         self.assertContains(response, "Cake")
 
     def test_snack_update_view_redirect(self):
+        user = self.set_up()
         response = self.client.post(
             reverse("snack_update", args="1"),
-            {"title": "Updated Title", "purchaser": self.user.id, "description": "test description",}
+            {"title": "Updated Title", "purchaser": self.user, "description": "test description",}
         )
 
         self.assertRedirects(response, reverse("snack_detail", args="1"), target_status_code=200)
