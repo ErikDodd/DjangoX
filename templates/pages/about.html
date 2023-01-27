@@ -1,7 +1,10 @@
 {% extends '_base.html' %}
+{% load static %}
 
 {% block title %}About page{% endblock %}
 
 {% block content %}
 <h1>About page</h1>
+    <p> Thanks for visiting my SNACKS website. My name is Erik Dodd and I'm Software Developer from Seattle who loves to snack.</p>
+<img src="{% static 'images/snack_platter.jpeg' %}" class="img-fluid" alt="Snack Platter"/>
 {% endblock content %}

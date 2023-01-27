@@ -1,0 +1,18 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Snack List</h1>
+    <p> Want to make a list of your favorite snacks? Hit the + New Snack link below and keep track of your favorite snacks</p>
+    <a href="{% url 'snack_create' %}">+ New Snack</a>
+    <ul>
+        {% for snack in snacks %}
+            <li>
+                <a href="{% url 'snack_detail' snack.pk %}">{{ snack.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <img src="{% static 'images/snacksnack.jpeg' %}" class="img-fluid" alt="charcuterie board"/>
+    <img src="{% static 'images/snack_board.jpeg' %}" class="img-fluid" alt="charcuterie board"/>
+    <img src="{% static 'images/chipsandstuff.jpeg' %}" class="img-fluid" alt="charcuterie board"/>
+{% endblock content %}
